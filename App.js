@@ -1,15 +1,15 @@
-import React from 'React';
-import {Text} from 'react-native';
+import React from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/es/integration/react';
 import {store, persistor} from './src/store';
 
 // Importar STACK
+import MainStack from './src/navigators/MainStack';
 
 export default () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <Text>...</Text>
+      <MainStack />
     </PersistGate>
   </Provider>
 );
