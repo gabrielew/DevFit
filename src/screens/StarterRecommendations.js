@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {Text} from 'react-native';
 import styled from 'styled-components/native';
 import {connect} from 'react-redux';
-import DefaultButton from '../components/DefaultButton';
+
+import workoutJson from '../presetWorkouts.json';
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -23,33 +25,45 @@ const BoldText = styled.Text`
   font-weight: bold;
 `;
 
-const LevelArea = styled.View`
+const NextButton = styled.Button``;
+
+const WorkoutList = styled.FlatList`
   width: 100%;
 `;
 
-const Text = styled.Text`
-  color: ${props => props.color || '#000'};
-`;
-
-const NextButton = styled.Button``;
-
 const Page = props => {
-  const handleLevel = level => {
-    props.setLevel(level);
-    props.navigation.setParams({level});
-  };
+  useEffect(() => {
+    if (props.myWorkouts.length > 0) {
+      props.navigation.setParams({myWorksouts: props.myWorkouts});
+    }
+  }, [props.myWorkouts]);
 
   return (
     <Container>
       <HeaderText>Some options created by your selected skills</HeaderText>
       <HeaderText>
-        <BoldText>u selected ... trains</BoldText>
+        <BoldText>u selected {props.myWorkouts.length} trains</BoldText>
       </HeaderText>
+
+      <WorkoutList
+        data={workoutJson}
+        renderItem={({item}) => <Text>{item.name}</Text>}
+        keyExtractor={item => item.id}
+      />
     </Container>
   );
 };
 
 Page.navigationOptions = ({navigation}) => {
+  let btnNext = 'Ignore';
+
+  if (
+    navigation.state.params &&
+    navigation.state.params.myWorkouts.length > 0
+  ) {
+    btnNext = 'Done';
+  }
+
   const handleNextAction = () => {
     if (!navigation.state.params || !navigation.state.params.level) {
       alert('check at least one item');
@@ -60,7 +74,7 @@ Page.navigationOptions = ({navigation}) => {
   };
   return {
     title: '',
-    headerRight: <NextButton title="Next" onPress={handleNextAction} />,
+    headerRight: <NextButton title={btnNext} onPress={handleNextAction} />,
     headerRightContainerStyle: {
       marginRight: 10,
     },
@@ -69,14 +83,14 @@ Page.navigationOptions = ({navigation}) => {
 
 const mapStateToProps = state => {
   return {
-    level: state.userReducer.level,
-    workoutDays: state.userReducer.workoutDays,
+    myWorkouts: state.userReducer.myWorkouts,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setLevel: level => dispatch({type: 'SET_LEVEL', payload: {level}}),
+    setMyworkouts: myWorkouts =>
+      dispatch({type: 'SET_MYWORKOUTS', payload: {myWorkouts}}),
   };
 };
 

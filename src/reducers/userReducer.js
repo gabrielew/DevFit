@@ -18,6 +18,9 @@ export default (state = initialState, action) => {
     case 'SET_LEVEL':
       return {...state, level: action.payload.level};
       break;
+    case 'SET_MYWORKOUTS':
+      return {...state, myWorkouts: action.payload.myWorkouts};
+      break;
   }
 
   return state;
