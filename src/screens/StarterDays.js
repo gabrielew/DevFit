@@ -36,20 +36,6 @@ const Text = styled.Text`
 const NextButton = styled.Button``;
 
 const Page = props => {
-  const handleNextAction = () => {
-    if (!props.name) {
-      alert('Fill name field');
-      return;
-    }
-
-    props.navigation.navigate('StarterDays');
-  };
-
-  const handleChangeName = name => {
-    props.setName(name);
-    props.navigation.setParams({name});
-  };
-
   const days = [
     'Sunday',
     'Monday',
