@@ -2,6 +2,13 @@ import {StackActions, NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 
 const Preload = props => {
+  // //Temporario
+  // props.navigation.dispatch(
+  //   StackActions.reset({
+  //     index: 0,
+  //     actions: [NavigationActions.navigate({routeName: 'StarterStack'})],
+  //   }),
+  // );
   if (!props.name) {
     //mandar para starterStack
     props.navigation.dispatch(
