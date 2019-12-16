@@ -45,6 +45,7 @@ const Page = props => {
   let today = new Date();
 
   const [selectedMonth, setSelectedMonth] = useState(today.getMonth());
+  const [selectedDay, setSelectedDay] = useState(today.getDate());
 
   return (
     <Container>
@@ -52,8 +53,23 @@ const Page = props => {
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
       />
-      <HomeDaysScroll />
-      <HomeDayStatus />
+      <HomeDaysScroll
+        selectedMonth={selectedMonth}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        dailyProgress={props.dailyProgress}
+        workoutDays={props.workoutDays}
+      />
+      <HomeDayStatus
+        selectedMonth={selectedMonth}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        dailyProgress={props.dailyProgress}
+        workoutDays={props.workoutDays}
+        addProgress={props.addProgress}
+        delProgress={props.delProgress}
+        goToWorkout={() => props.navigation.navigate('WorkoutStack')}
+      />
 
       <Legend>
         <LegendText>Legends:</LegendText>
@@ -103,11 +119,17 @@ Page.navigationOptions = ({navigation}) => {
 };
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    dailyProgress: state.userReducer.dailyProgress,
+    workoutDays: state.userReducer.workoutDays,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    addProgress: date => dispatch({type: 'ADD_PROGRESS', payload: {date}}),
+    delProgress: date => dispatch({type: 'DEL_PROGRESS', payload: {date}}),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page);
