@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import {connect} from 'react-redux';
 
@@ -42,9 +42,16 @@ const Page = props => {
     {legend: 'Future Day', color: '#999'},
   ];
 
+  let today = new Date();
+
+  const [selectedMonth, setSelectedMonth] = useState(today.getMonth());
+
   return (
     <Container>
-      <HomeMonthScroll />
+      <HomeMonthScroll
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
       <HomeDaysScroll />
       <HomeDayStatus />
 
