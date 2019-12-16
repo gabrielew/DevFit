@@ -69,7 +69,7 @@ const Page = props => {
       <DaysArea>
         {days.map((item, key) => (
           <DefaultButton
-            bgColor={props.workoutDays.includes(key) ? '#7159ca' : false}
+            bgColor={props.workoutDays.includes(key) ? '#7159c1' : false}
             onPress={() => toggleDay(key)}
             key={key}
             width={150}

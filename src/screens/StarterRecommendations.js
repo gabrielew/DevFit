@@ -1,7 +1,9 @@
 import React, {useEffect} from 'react';
-import {Text} from 'react-native';
+import {StackActions, NavigationActions} from 'react-navigation';
 import styled from 'styled-components/native';
 import {connect} from 'react-redux';
+
+import Workout from '../components/Workout';
 
 import workoutJson from '../presetWorkouts.json';
 
@@ -16,7 +18,7 @@ const Container = styled.SafeAreaView`
 
 const HeaderText = styled.Text`
   font-size: 15px;
-  color: #7159c1;
+  color: #000;
   text-align: center;
   margin-bottom: 30px;
 `;
@@ -38,16 +40,26 @@ const Page = props => {
     }
   }, [props.myWorkouts]);
 
+  const addWorkout = item => {
+    if (props.myWorkouts.findIndex(i => i.id == item.id) < 0) {
+      props.addWorkout(item);
+    } else {
+      props.delWorkout(item);
+    }
+  };
+
   return (
     <Container>
       <HeaderText>Some options created by your selected skills</HeaderText>
       <HeaderText>
-        <BoldText>u selected {props.myWorkouts.length} trains</BoldText>
+        <BoldText>you selected {props.myWorkouts.length} trains</BoldText>
       </HeaderText>
 
       <WorkoutList
         data={workoutJson}
-        renderItem={({item}) => <Text>{item.name}</Text>}
+        renderItem={({item}) => (
+          <Workout data={item} addAction={() => addWorkout(item)} />
+        )}
         keyExtractor={item => item.id}
       />
     </Container>
@@ -57,20 +69,17 @@ const Page = props => {
 Page.navigationOptions = ({navigation}) => {
   let btnNext = 'Ignore';
 
-  if (
-    navigation.state.params &&
-    navigation.state.params.myWorkouts.length > 0
-  ) {
+  if (navigation.state.params) {
     btnNext = 'Done';
   }
 
   const handleNextAction = () => {
-    if (!navigation.state.params || !navigation.state.params.level) {
-      alert('check at least one item');
-      return;
-    }
-
-    navigation.navigate('StarterRecommendations');
+    navigation.dispatch(
+      StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({routeName: 'AppTab'})],
+      }),
+    );
   };
   return {
     title: '',
@@ -89,8 +98,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setMyworkouts: myWorkouts =>
-      dispatch({type: 'SET_MYWORKOUTS', payload: {myWorkouts}}),
+    addWorkout: workout => dispatch({type: 'ADD_WORKOUT', payload: {workout}}),
+    delWorkout: workout => dispatch({type: 'DEL_WORKOUT', payload: {workout}}),
   };
 };
 
