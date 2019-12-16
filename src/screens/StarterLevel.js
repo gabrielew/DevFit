@@ -76,7 +76,7 @@ const Page = props => {
         {levels.map((item, key) => (
           <DefaultButton
             key={key}
-            bgColor={props.level == item ? '#7159ca' : false}
+            bgColor={props.level == item ? '#7159c1' : false}
             onPress={() => handleLevel(item)}
             style={{marginBottom: 20}}>
             <Text color={props.level == item ? '#FFF' : false}>{item}</Text>
