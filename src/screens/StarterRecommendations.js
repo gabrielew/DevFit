@@ -2,9 +2,7 @@ import React, {useEffect} from 'react';
 import {StackActions, NavigationActions} from 'react-navigation';
 import styled from 'styled-components/native';
 import {connect} from 'react-redux';
-
 import Workout from '../components/Workout';
-
 import workoutJson from '../presetWorkouts.json';
 
 const Container = styled.SafeAreaView`
@@ -15,29 +13,20 @@ const Container = styled.SafeAreaView`
   margin-right: 30px;
   margin-top: 50px;
 `;
-
 const HeaderText = styled.Text`
   font-size: 15px;
-  color: #000;
+  color: #333;
   text-align: center;
   margin-bottom: 30px;
 `;
-
-const BoldText = styled.Text`
-  font-weight: bold;
-`;
-
 const NextButton = styled.Button``;
-
 const WorkoutList = styled.FlatList`
   width: 100%;
 `;
 
 const Page = props => {
   useEffect(() => {
-    if (props.myWorkouts.length > 0) {
-      props.navigation.setParams({myWorksouts: props.myWorkouts});
-    }
+    props.navigation.setParams({myWorkouts: props.myWorkouts});
   }, [props.myWorkouts]);
 
   const addWorkout = item => {
@@ -51,9 +40,7 @@ const Page = props => {
   return (
     <Container>
       <HeaderText>Some options created by your selected skills</HeaderText>
-      <HeaderText>
-        <BoldText>you selected {props.myWorkouts.length} trains</BoldText>
-      </HeaderText>
+      <HeaderText>you selected {props.myWorkouts.length} trains</HeaderText>
 
       <WorkoutList
         data={workoutJson}
@@ -81,6 +68,7 @@ Page.navigationOptions = ({navigation}) => {
       }),
     );
   };
+
   return {
     title: '',
     headerRight: <NextButton title={btnNext} onPress={handleNextAction} />,

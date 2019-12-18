@@ -2,7 +2,7 @@ import {StackActions, NavigationActions} from 'react-navigation';
 import {connect} from 'react-redux';
 
 const Preload = props => {
-  // //Temporario
+  // Temporario;
   // props.navigation.dispatch(
   //   StackActions.reset({
   //     index: 0,

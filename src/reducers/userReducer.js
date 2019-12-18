@@ -1,7 +1,7 @@
 const initialState = {
   name: '',
-  level: '', // beginner, intermidiate, advanced
-  workoutDays: [], // 1-0
+  level: '', // beginner, intermediate, advanced
+  workoutDays: [], // 0-6 (Semana começa no DOMINGO)
   myWorkouts: [],
   lastWorkout: '', // ID
   dailyProgress: ['2019-09-13', '2019-09-12'],
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
       return {...state, level: action.payload.level};
       break;
     case 'ADD_WORKOUT':
-      if (myWorkouts.findIndex(i => i.add == action.payload.workout.id) < 0) {
+      if (myWorkouts.findIndex(i => i.id == action.payload.workout.id) < 0) {
         myWorkouts.push(action.payload.workout);
       }
       return {...state, myWorkouts};
@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
       return {...state, dailyProgress};
       break;
     case 'DEL_PROGRESS':
-      dailyProgress = dailyProgress.filter(i => i.id != action.payload.date);
+      dailyProgress = dailyProgress.filter(i => i != action.payload.date);
       return {...state, dailyProgress};
       break;
   }

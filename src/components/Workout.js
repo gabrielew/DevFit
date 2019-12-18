@@ -3,6 +3,8 @@ import styled from 'styled-components/native';
 import UseMuscleImage from './UseMuscleImage';
 import AddImage from '../assets/add.png';
 import CheckImage from '../assets/check-black.png';
+import EditImage from '../assets/edit-black.png';
+import DelImage from '../assets/trash-black.png';
 
 const Workout = styled.View`
   background-color: #f1f1f1;
@@ -72,6 +74,13 @@ export default props => {
     props.addAction();
   };
 
+  const editWorkout = () => {
+    props.editAction();
+  };
+  const delWorkout = () => {
+    props.delAction();
+  };
+
   return (
     <Workout>
       <WorkoutInfo>
@@ -85,9 +94,21 @@ export default props => {
         </MuscleScroll>
       </WorkoutInfo>
       <WorkoutActions>
-        <WorkoutButton onPress={() => addWorkout()}>
-          <WorkoutButtonImage source={included ? CheckImage : AddImage} />
-        </WorkoutButton>
+        {props.addAction && (
+          <WorkoutButton onPress={() => addWorkout()}>
+            <WorkoutButtonImage source={included ? CheckImage : AddImage} />
+          </WorkoutButton>
+        )}
+        {props.editAction && (
+          <WorkoutButton onPress={() => editWorkout()}>
+            <WorkoutButtonImage source={EditImage} />
+          </WorkoutButton>
+        )}
+        {props.delAction && (
+          <WorkoutButton onPress={() => delWorkout()}>
+            <WorkoutButtonImage source={DelImage} />
+          </WorkoutButton>
+        )}
       </WorkoutActions>
     </Workout>
   );
