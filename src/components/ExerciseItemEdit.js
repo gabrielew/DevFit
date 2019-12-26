@@ -19,7 +19,7 @@ const ExerciseMuscleArea = styled.View`
 `;
 const ExerciseMuscleImage = styled.Image`
   width: 35px;
-  height: 50px;
+  height: 35px;
 `;
 const ExerciseInfo = styled.View`
   flex-direction: column;

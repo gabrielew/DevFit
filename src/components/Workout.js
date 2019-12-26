@@ -5,6 +5,7 @@ import AddImage from '../assets/add.png';
 import CheckImage from '../assets/check-black.png';
 import EditImage from '../assets/edit-black.png';
 import DelImage from '../assets/trash-black.png';
+import PlayBlack from '../assets/play-black.png';
 
 const Workout = styled.View`
   background-color: #f1f1f1;
@@ -81,6 +82,10 @@ export default props => {
     props.delAction();
   };
 
+  const goWorkout = () => {
+    props.goAction();
+  };
+
   return (
     <Workout>
       <WorkoutInfo>
@@ -107,6 +112,11 @@ export default props => {
         {props.delAction && (
           <WorkoutButton onPress={() => delWorkout()}>
             <WorkoutButtonImage source={DelImage} />
+          </WorkoutButton>
+        )}
+        {props.goAction && (
+          <WorkoutButton onPress={() => goWorkout()}>
+            <WorkoutButtonImage source={PlayBlack} />
           </WorkoutButton>
         )}
       </WorkoutActions>

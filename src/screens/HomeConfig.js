@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {StackActions, NavigationActions} from 'react-navigation';
 import styled from 'styled-components/native';
 import {connect} from 'react-redux';
 
@@ -50,6 +51,8 @@ const LevelItemText = styled.Text``;
 
 const DayItemText = styled.Text``;
 
+const ResetButton = styled.Button``;
+
 const days = [
   {day: 'S', id: 0},
   {day: 'M', id: 1},
@@ -73,6 +76,15 @@ const Page = props => {
       newWorkoutDays.push(day);
     }
     props.setWorkoutDays(newWorkoutDays);
+  };
+
+  const handleReset = () => {
+    props.reset();
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({routeName: 'StarterStack'})],
+    });
+    props.navigation.dispatch(resetAction);
   };
   return (
     <Container>
@@ -115,6 +127,10 @@ const Page = props => {
           </LevelItem>
         ))}
       </ListArea>
+      <Label style={{textAlign: 'center'}}>
+        Reset all your personal config?
+      </Label>
+      <ResetButton title="Reset" onPress={handleReset} />
     </Container>
   );
 };
@@ -139,6 +155,7 @@ const mapDispatchToProps = dispatch => {
     setWorkoutDays: workoutDays =>
       dispatch({type: 'SET_WORKOUTDAYS', payload: {workoutDays}}),
     setLevel: level => dispatch({type: 'SET_LEVEL', payload: {level}}),
+    reset: () => dispatch({type: 'RESET'}),
   };
 };
 
